@@ -3,6 +3,12 @@ from streamlit_option_menu import option_menu
 import mysql.connector
 import time
 
+# Define the SessionState class
+class SessionState:
+    def __init__(self, **kwargs):
+        for key, val in kwargs.items():
+            setattr(self, key, val)
+
 # Function to authenticate user
 def authenticate(email, password):
     conn = mysql.connector.connect(
@@ -23,16 +29,26 @@ def authenticate(email, password):
     else:
         return False
 
+# Function to get or create SessionState
+def get_session_state():
+    if "session_state" not in st.session_state:
+        st.session_state.session_state = SessionState(logged_in=False)
+    return st.session_state.session_state
+
 # Login page
 def login_page():
     st.write("Login")
     email = st.text_input("Email")
     password = st.text_input("Password", type="password")
+    remember_me = st.checkbox("Remember me")
     if st.button("Login"):
         if authenticate(email, password):
             st.success("Login successful")
-            st.session_state.logged_in = True
-            st.session_state.last_activity_time = time.time()
+            session_state = get_session_state()
+            session_state.logged_in = True
+            session_state.last_activity_time = time.time()
+            if remember_me:
+                session_state.remember_me = True
         else:
             st.error("Invalid username or password")
 
@@ -52,21 +68,23 @@ def dashboard():
 
 # Function to check for session timeout
 def check_session_timeout():
-    if st.session_state.logged_in:
+    session_state = get_session_state()
+    if session_state.logged_in:
         current_time = time.time()
-        last_activity_time = st.session_state.get("last_activity_time", current_time)
+        last_activity_time = session_state.get("last_activity_time", current_time)
         if current_time - last_activity_time > 300:  # 300 seconds = 5 minutes
-            st.session_state.logged_in = False
+            session_state.logged_in = False
+            session_state.remember_me = False
             st.error("Session timed out. Please log in again.")
-            st.stop() 
-            login_page() 
-            
+            st.experimental_rerun()
+
 def main():
-    if not st.session_state.get("logged_in", False):
+    session_state = get_session_state()
+    if not session_state.logged_in:
         login_page()
     else:
-        check_session_timeout()  # Check for session timeout
         dashboard()
+        check_session_timeout()  # Check for session timeout
 
 if __name__ == "__main__":
     main()
