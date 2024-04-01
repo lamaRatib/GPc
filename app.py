@@ -1,6 +1,6 @@
 import streamlit as st
-from multiapp import MultiApp
-from app import dashboard, sentiment, model # import your app modules here
+from MultiApp import MultiApp
+import dashboard, sentiment 
 
 app = MultiApp()
 
