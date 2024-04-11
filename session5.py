@@ -14,16 +14,16 @@ def check_activity():
         time.sleep(5)  
 
 
-def updateORend():
+def updateORend(key1,key2):
     if st.session_state['session_ends']:
-        modal = Modal("Warning", key="demo-modal",padding=60,max_width=500)
+        modal = Modal("Warning", key=key1,padding=60,max_width=500)
         with modal.container():
-                    st.write('You have been 5 mins without activity, login again please...')
+                    st.write('You have been 5 mins or more without activity, login again please...')
                     col1, col2, col3 = st.columns([1, 4, 1.2])
                     with col3:
-                        if st.button("Logout",key="logout-modal"):    
+                        if st.button("Logout",key=key2):    
                             st.session_state['authentication_status'] = False
                             st.session_state['logged_out']=True
-                            st.experimental_rerun()
+                            st.rerun()
     else:
         st.session_state['last_activity_time'] = time.time()

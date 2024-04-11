@@ -1,6 +1,6 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
-import dashboard, sentiment
+import dashboard, sentiment, session5
 
 
 def uif():
@@ -25,19 +25,6 @@ def uif():
             }
         </style>
         """, unsafe_allow_html=True)
-
-    with st.sidebar:
-        st.image("AmazonLogo2.svg", use_column_width=True)
-        st.markdown('<hr>', unsafe_allow_html=True)
-        st.subheader(':level_slider: Slicers:')
-        color_theme_list = ['blues', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
-        selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
-        if st.button('logout'):
-            st.session_state['authentication_status'] = False
-            st.session_state['logged_out'] = True
-            st.session_state['session_ends'] = False
-            st.experimental_rerun()
-            
         
     selected = option_menu(
         menu_title=None,
@@ -49,28 +36,10 @@ def uif():
     
     if selected=="Dashboard page":
         dashboard.app()
+        session5.updateORend("modal2","logout2")
+        
     else:
         sentiment.app()
-
-
+        session5.updateORend("modal3","logout3")
         
-""" 
-    modal = Modal("Warning", key="demo-modal",padding=60,max_width=500)
-    
-    
-    with modal.container():
-        
-        
-        st.write('You have been 5 mins without activity, login again please...')
-        col1, col2, col3 = st.columns([1, 4, 1.2])
-        with col3:
-            if st.button("Logout",key="logout-modal"):
-                # Add logout logic here
-                pass
-        
-"""
-
-
-
-
 
