@@ -2,6 +2,7 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 import dashboard, sentiment
 
+
 def uif():
     st.markdown("""
         <style>
@@ -19,6 +20,9 @@ def uif():
                 margin-top: -10px !important;
                 margin-bottom: -10px !important;
             }
+            section[data-testid="stSidebar"] {
+                width: 270px !important; # Set the width to your desired value
+            }
         </style>
         """, unsafe_allow_html=True)
 
@@ -31,6 +35,7 @@ def uif():
         if st.button('logout'):
             st.session_state['authentication_status'] = False
             st.session_state['logged_out'] = True
+            st.session_state['session_ends'] = False
             st.experimental_rerun()
             
         
@@ -46,6 +51,25 @@ def uif():
         dashboard.app()
     else:
         sentiment.app()
+
+
+        
+""" 
+    modal = Modal("Warning", key="demo-modal",padding=60,max_width=500)
+    
+    
+    with modal.container():
+        
+        
+        st.write('You have been 5 mins without activity, login again please...')
+        col1, col2, col3 = st.columns([1, 4, 1.2])
+        with col3:
+            if st.button("Logout",key="logout-modal"):
+                # Add logout logic here
+                pass
+        
+"""
+
 
 
 
