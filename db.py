@@ -19,3 +19,9 @@ class DB:
 
     return cursor
   
+  def cleaning(self,df):
+    pass
+
+  def filtering(self,sql):
+    pass
+  

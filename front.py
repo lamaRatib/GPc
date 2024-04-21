@@ -4,10 +4,11 @@ import dashboard, sentiment, session5
 
 
 def uif():
+
     st.markdown("""
         <style>
             .block-container {
-                padding-top: 2rem;
+                padding-top: 1rem;
                 padding-bottom: 0rem;
                 padding-left: 5rem;
                 padding-right: 5rem;
@@ -23,9 +24,14 @@ def uif():
             section[data-testid="stSidebar"] {
                 width: 270px !important; # Set the width to your desired value
             }
+            section.main > div {max-width:70rem}
+                
+            button[title="View fullscreen"]{visibility: hidden;}
+
         </style>
         """, unsafe_allow_html=True)
-        
+    
+    
     selected = option_menu(
         menu_title=None,
         options=["Dashboard page", "Sentiment page"], 
@@ -38,7 +44,7 @@ def uif():
         dashboard.app()
         session5.updateORend("modal2","logout2")
         
-    else:
+    elif selected=="Sentiment page":
         sentiment.app()
         session5.updateORend("modal3","logout3")
         

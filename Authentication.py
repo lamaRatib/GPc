@@ -7,7 +7,7 @@ from front import uif
 import session5
 
 
-st.set_page_config(page_title="Amazon Sales Dashboard", page_icon=":bar_chart:",)
+st.set_page_config(page_title="Amazon Sales Dashboard", page_icon=":bar_chart:",layout='wide')
 
 if 'authentication_status' not in st.session_state:
     st.session_state={}
@@ -23,13 +23,19 @@ for user in data:
     email, password, uname = user[0], user[1], user[2]
     credentials["usernames"][email] = {"name": uname, "password": password}
 
-# Initialize login form
+
 placeholder = st.empty()
+
+st.markdown("""
+        <style>
+            section.main > div {max-width:60rem}
+            
+        </style>
+        """, unsafe_allow_html=True)
 
 if st.session_state['authentication_status']==False:
     
-
-    with placeholder.form("login"):
+    with placeholder.form("login") :
         st.header("Login")
         email = st.text_input("Email")
         password = st.text_input("Password", type="password")
