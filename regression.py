@@ -6,8 +6,6 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import KFold
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import LeaveOneOut
-
-
 import db
 import plotly.express as px
 

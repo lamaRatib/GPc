@@ -4,7 +4,11 @@ import dashboard, sentiment, session5
 
 
 def uif():
+    """
+        This func is for display the main page after login successfuly
+    """
 
+    # Appling CSS styling on streamlit page
     st.markdown("""
         <style>
             .block-container {
@@ -31,7 +35,7 @@ def uif():
         </style>
         """, unsafe_allow_html=True)
     
-    
+    # Navigation menu of 2 pages:
     selected = option_menu(
         menu_title=None,
         options=["Dashboard page", "Sentiment page"], 
@@ -40,6 +44,7 @@ def uif():
         default_index=0,
         orientation="horizontal")
     
+    # If selected first page display the app func of selected page and update the last activity time
     if selected=="Dashboard page":
         dashboard.app()
         session5.updateORend("modal2","logout2")

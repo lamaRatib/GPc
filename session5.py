@@ -3,18 +3,26 @@ from streamlit_modal import Modal
 import time
 
 def check_activity():
+    """  
+        Each time sleep (2mins) it test if the last activity time and current time 
+        if more than 5min should st.session_state['session_ends'] = True
+        else sleep and check again untill it log out by himself
+
+    """
     while st.session_state['authentication_status']:
         elapsed_time = time.time() - st.session_state['last_activity_time']
-        # If more than 20 seconds have elapsed, log out the user
-        st.write(elapsed_time)
         if elapsed_time > 20:
-            st.warning("You have been logged out due to inactivity.")
             st.session_state['session_ends'] = True
             return
         time.sleep(5)  
 
 
 def updateORend(key1,key2):
+    """
+        This func is added to whereever there is a click or activity on the page so 
+        if the session_ends false then popup warning massage to logout 
+        else update the last activity time
+    """
     if st.session_state['session_ends']:
         modal = Modal("Warning", key=key1,padding=60,max_width=500)
         with modal.container():
