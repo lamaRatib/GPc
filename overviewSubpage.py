@@ -1,12 +1,12 @@
 import streamlit as st
-import Database.db as db 
+import db 
 import pandas as pd
 import plotly.express as px
 
 
 
 
-def vis(filter): 
+def overview(filter): 
     col1, col2, col3, col4 = st.columns(4)
 
     # Filter Condition preparation:

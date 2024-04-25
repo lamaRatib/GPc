@@ -2,9 +2,9 @@ import streamlit as st
 from streamlit_modal import Modal
 import time
 import threading
-from Database import db
-from UI.front import uif
-import Business.session5 as session5
+import db
+from front import uif
+import session5 as session5
 
 # The first page that will be run by streamlit 
 

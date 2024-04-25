@@ -1,5 +1,7 @@
 import streamlit as st
-from Business.visual import visuals
+from sidbar import visuals
+
+
 def app():
     filter={}
     # Sidebar code which contains (sidebar func, slicers func):
