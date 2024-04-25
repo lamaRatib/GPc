@@ -2,9 +2,9 @@ import streamlit as st
 from streamlit_modal import Modal
 import time
 import threading
-import db
-from front import uif
-import session5
+from Database import db
+from UI.front import uif
+import Business.session5 as session5
 
 # The first page that will be run by streamlit 
 
@@ -19,7 +19,7 @@ if 'authentication_status' not in st.session_state:
 
 # Load credentials from the database
 sql = "SELECT email,password,user_name FROM user"
-data = db.DB().query(sql)
+data = db.datab.query(sql)
 credentials = {"usernames": {}}
 for user in data:
     email, password, uname = user[0], user[1], user[2]

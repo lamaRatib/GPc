@@ -11,7 +11,7 @@ def check_activity():
     """
     while st.session_state['authentication_status']:
         elapsed_time = time.time() - st.session_state['last_activity_time']
-        if elapsed_time > 20:
+        if elapsed_time > 20000:
             st.session_state['session_ends'] = True
             return
         time.sleep(5)  

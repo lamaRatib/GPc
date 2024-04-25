@@ -1,6 +1,6 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
-import dashboard, sentiment, session5
+import UI.dashboard as dashboard, UI.sentiment as sentiment, Business.session5 as session5
 
 
 def uif():
