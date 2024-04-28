@@ -56,10 +56,9 @@ products=datab.get_product()
 customer=datab.get_customer()
 review=datab.get_review()
 
-merged_df = pd.merge(sales, products, on='product_id', how='inner')
-
-# Merge with customer on 'customer_id'
-merged_df = pd.merge(merged_df, customer, on='customer_id', how='inner')
-
-# Merge with review on 'product_id' and 'customer_id'
-merged_df_final = pd.merge(merged_df, review, on=['product_id', 'customer_id'], how='inner')
+# Joins:
+sales_product = pd.merge(sales, products, on='product_id', how='inner')
+sales_product_customer = pd.merge(sales_product, customer, on='customer_id', how='inner')
+sales_product_customer_review = pd.merge(sales_product_customer, review, on=['product_id', 'customer_id'], how='inner')
+review_product=pd.merge(review, products, on='product_id', how='inner')
+review_product_customer= pd.merge(review_product, customer, on='customer_id', how='inner')

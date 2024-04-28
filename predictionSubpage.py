@@ -24,7 +24,7 @@ def predict():
     y = df['total_sales'].values
 
     # Scatter plot of original data:
-    fig = px.scatter(df, x='Date', y='total_sales', title='Sales Over Time')
+    fig = px.scatter(df, x='Date', y='total_sales', title='Sales Over Time',color_discrete_sequence=[ "LightSlateGray"])
     fig.layout.xaxis.fixedrange = True
     fig.layout.yaxis.fixedrange = True
     config = {'displayModeBar': False,'dragMode':False}
