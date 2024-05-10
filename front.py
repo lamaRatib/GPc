@@ -1,6 +1,6 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
-import dashboard as dashboard, sentiment as sentiment, session5 as session5
+import dashboard, sentiment, session5 
 
 
 def uif():
@@ -26,7 +26,7 @@ def uif():
                 margin-bottom: -10px !important;
             }
             section[data-testid="stSidebar"] {
-                width: 270px !important; # Set the width to your desired value
+                width: 300px !important; 
             }
             section.main > div {max-width:70rem}
                 
@@ -46,11 +46,12 @@ def uif():
     
     # If selected first page display the app func of selected page and update the last activity time
     if selected=="Dashboard page":
-        dashboard.app()
         session5.updateORend("modal2","logout2")
+        dashboard.app()
         
     elif selected=="Sentiment page":
-        sentiment.app()
         session5.updateORend("modal3","logout3")
+        sentiment.app()
+
         
 

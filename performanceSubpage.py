@@ -2,9 +2,7 @@ import streamlit as st
 import db 
 import pandas as pd
 import plotly.express as px
-from st_circular_progress import CircularProgress
 import plotly.graph_objects as go
-
 
 
 def performance(filter): 
@@ -102,11 +100,12 @@ def performance(filter):
     # Visual 2:
     with col[0]:
         if category or subcategory or productid or city or review or date:
-            visual_2 = filtered_table
+            filtered_table['Price']= filtered_table['discounted_price'] / filtered_table['quantity']
+            visual_2 = filtered_table.groupby('product_id')['Price'].mean().reset_index()
         else:
-            visual_2= db.sales
-        visual_2['Price']=visual_2['discounted_price']/visual_2['quantity']
-        fig_boxplot = px.box(visual_2, y='Price', height=250,title='Box Plot of Discounted Prices')
+            db.sales['Price']= db.sales['discounted_price'] / db.sales['quantity']
+            visual_2= db.sales.groupby('product_id')['Price'].mean().reset_index()
+        fig_boxplot = px.box(visual_2, y='Price', height=250,title='Box Plot of Prices',color_discrete_sequence=[ "LightSlateGray"])
         fig_boxplot.layout.xaxis.fixedrange = True
         fig_boxplot.layout.yaxis.fixedrange = True 
         fig_boxplot.update_layout(margin=dict(t=20))
@@ -124,9 +123,9 @@ def performance(filter):
         g.layout.xaxis.fixedrange = True
         g.layout.yaxis.fixedrange = True 
         g.update_layout(
-                height=240,  # Specify the height
+                height=260,  # Specify the height
                 width=400,   # Specify the width
-                margin=dict(t=35)  # Set the top margin
+                margin=dict(t=40)  # Set the top margin
             )
         config = {'displayModeBar': False,'dragMode':False}
         st.plotly_chart(g,config=config,use_container_width=True)

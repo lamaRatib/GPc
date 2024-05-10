@@ -5,6 +5,8 @@ import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import LinearRegression
 import plotly.express as px
+from datetime import datetime
+
 
 def predict():
     # Loading sales over time data:
@@ -18,9 +20,9 @@ def predict():
     data = db.datab.query(sql) 
     df=pd.DataFrame(data,columns=['Date','total_sales'])
     df['Date'] = pd.to_datetime(df['Date'])
-    df['Month'] = df['Date'].dt.month
-    df['Year'] = df['Date'].dt.year
-    x = df[['Month', 'Year']].values
+    df['Datenum'] = df['Date'].apply(lambda x: datetime.toordinal(x))
+
+    x = df['Datenum'].values
     y = df['total_sales'].values
 
     # Scatter plot of original data:
@@ -30,8 +32,8 @@ def predict():
     config = {'displayModeBar': False,'dragMode':False}
 
     # Polynomial reg: Train data to get the modal:
-    polynomial_features= PolynomialFeatures(degree=5)
-    x_poly = polynomial_features.fit_transform(x)
+    polynomial_features= PolynomialFeatures(degree=4, include_bias=False)
+    x_poly = polynomial_features.fit_transform(x.reshape(-1, 1))
     model = LinearRegression()
     model.fit(x_poly, y)
 
@@ -51,7 +53,7 @@ def predict():
     month = {'Select a month': 0, 'Jan': 1, 'Feb': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6, 
                 'July': 7, 'Aug': 8, 'Sept': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12}
     month_num=[1,2,3,4,5,6,7,8,9,10,11,12]
-    year= ['Select a year',2022,2023,2024,2025,2026,2027,2028,2029,2030]
+    year= ['Select a year',2023,2024,2025,2026,2027,2028,2029,2030]
     with col2:
         container2 = st.container(border=True,height=410)
         container2.subheader('Prediction:')
@@ -65,13 +67,12 @@ def predict():
             if selected_month=='Select a month' or selected_year=='Select a year':
                 container2.write('')
             else:
-                xpred=np.array([[month.get(selected_month),selected_year]])
-                inputted=polynomial_features.fit_transform(xpred)
+                date_string = f"{selected_year}-{month[selected_month]:02d}-01"
+                selected_date = datetime.strptime(date_string, '%Y-%m-%d')
+                num= selected_date.toordinal()
+                num=np.array(num)
+                inputted=polynomial_features.fit_transform(num.reshape(-1,1))
                 pred = model.predict(inputted)
-                if pred[0]!=None:
-                    formatted_pred = f"${pred[0] / 1000:.1f}K" if pred[0] >= 1000 else pred[0]
-                    formatted_pred = f"${pred[0] / 1000000:.1f}M" if pred[0] >= 1000000 else formatted_pred
-                else:
-                    formatted_pred="$0"
                 
+                formatted_pred = format(int(pred[0]), ",")
                 container2.write(formatted_pred)

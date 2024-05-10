@@ -11,7 +11,7 @@ def check_activity():
     """
     while st.session_state['authentication_status']:
         elapsed_time = time.time() - st.session_state['last_activity_time']
-        if elapsed_time > 20000:
+        if elapsed_time > 300:
             st.session_state['session_ends'] = True
             return
         time.sleep(5)  
@@ -33,5 +33,6 @@ def updateORend(key1,key2):
                             st.session_state['authentication_status'] = False
                             st.session_state['logged_out']=True
                             st.rerun()
+        st.stop()
     else:
         st.session_state['last_activity_time'] = time.time()

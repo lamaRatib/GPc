@@ -1,7 +1,6 @@
 import MySQLdb
 import MySQLdb.cursors
 import pandas as pd
-# Connection to MySQL class:
 
 class DB:
   conn = None
@@ -26,29 +25,31 @@ class DB:
     sql="SELECT * FROM sales;"
     query=self.query(sql)
     sales=pd.DataFrame(query,columns=['sale_id','product_id','discounted_price','actual_price','discounted_percentage','customer_id','date','quantity'])
-    return sales
+    return self.cleaning(sales)
   
   def get_product(self):
     sql="SELECT * FROM products;"
     query=self.query(sql)
     product=pd.DataFrame(query,columns=['product_id','product_name','category','sub_category'])
-    return product
+    return self.cleaning(product)
   
   def get_customer(self):
     sql="SELECT * FROM customer;"
     query=self.query(sql)
     customer=pd.DataFrame(query,columns=['customer_id','customer_name','city'])
-    return customer
+    return self.cleaning(customer)
   
   def get_review(self):
     sql="SELECT * FROM review;"
     query=self.query(sql)
     review=pd.DataFrame(query,columns=['review_id','product_id','customer_id','review_title','review_content','rating'])
-    return review
+    return self.cleaning(review)
     
   def cleaning(self,df):
     # Cleaning the resulting of query func
-    pass
+    df.drop_duplicates(inplace=True)
+    df.dropna(inplace=True)
+    return df
 
 datab=DB()
 sales=datab.get_sales()

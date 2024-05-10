@@ -81,7 +81,7 @@ class visuals:
                     st.session_state['session_ends'] = False
                     st.rerun()
         st.markdown('<hr style="margin-top: 0px; margin-bottom: 7px">', unsafe_allow_html=True)
-        st.subheader(':level_slider: Slicers:')
+        st.subheader(':level_slider: Filters:')
     
 
 

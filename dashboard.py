@@ -1,11 +1,5 @@
 import streamlit as st
 import extra_streamlit_components as stx
-import db as db 
-import pandas as pd
-import plotly.express as px
-from sklearn.preprocessing import PolynomialFeatures
-from sklearn.linear_model import LinearRegression
-import numpy as np
 import overviewSubpage, performanceSubpage, predictionSubpage, sidbar
 
 

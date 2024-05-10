@@ -1,9 +1,8 @@
 import streamlit as st
 import db 
-import pandas as pd
 import plotly.express as px
 
-print(db.sales.columns)
+
 def overview(filter): 
     col1, col2, col3, col4 = st.columns(4)
 
@@ -77,7 +76,7 @@ def overview(filter):
             
             review=True
 
-
+    
     # Card1: Total Sales
     if date or category or subcategory or productid or city or review:
         card1 = filtered_table['discounted_price'].sum()
@@ -128,19 +127,17 @@ def overview(filter):
         card4 = db.customer['customer_id'].nunique()
     col4.metric(value=int(card4), label="Number of Customers")
 
-
-    # Visual1:
     col=st.columns(2)
 
-    # Plot bar chart for Number of Sales per Category
+    # Visual1:
     with col[0]:
         # Data preparing & Filter Reflicting:
         if category or subcategory or productid or city or review or date:
-            visual_2 = filtered_table.groupby('category')['sale_id'].nunique().reset_index()
+            visual_2 = filtered_table.groupby('category')['quantity'].sum().reset_index()
         else:
             merged_df = db.sales.merge(db.products, on='product_id', how='inner')
-            visual_2 = merged_df.groupby('category')['sale_id'].nunique().reset_index()
-        visual_2.rename(columns={'category': 'Category', 'sale_id':'Count of Sales'}, inplace=True)
+            visual_2 = merged_df.groupby('category')['quantity'].sum().reset_index()
+        visual_2.rename(columns={'category': 'Category', 'quantity':'Count of Sales'}, inplace=True)
 
         # Result Ploting:
         fig= px.pie(visual_2, names='Category', values='Count of Sales', title='# of Sales per Category',height=400,color_discrete_sequence=["LightGray", "Silver", "DimGray", "LightSlateGray","DarkSlateGray","Black"])
@@ -170,7 +167,24 @@ def overview(filter):
         st.plotly_chart(fig,config=config,use_container_width=True)
 
     
+    
+    st.markdown(
+        """
+        <style>
+            div[data-testid=stToast] {
+                background-color: #2C2C2C;
+                width: 25%;
+            }
+             
+            [data-testid=toastContainer] [data-testid=stMarkdownContainer] > p {
+                font-size: 15px; font-style: normal; font-weight: 450;
+                foreground-color: #565654;
+            }
+        </style>
+        """, unsafe_allow_html=True
+    )
 
-
-
+    # Slicers updates notification:
+    if category:
+        st.toast(':level_slider: The displayed data is filtered by category: '+filter.get('selected_category')) 
     
