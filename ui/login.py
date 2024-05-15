@@ -1,5 +1,5 @@
 import streamlit as st 
-import db
+import database.db as db
 
 def login():
     sql = "SELECT email,password,user_name FROM user"
@@ -10,11 +10,9 @@ def login():
         credentials[email] = {"name": uname, "password": password}
 
     placeholder = st.empty()
-
     st.markdown("""
             <style>
                 section.main > div {max-width:60rem}
-                
             </style>
             """, unsafe_allow_html=True)
 

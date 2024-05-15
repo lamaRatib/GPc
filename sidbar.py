@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import db
+import database.db as db
 
 class visuals:
 
@@ -73,7 +73,7 @@ class visuals:
         with container3:
             col = st.columns([3.2, 3], gap="medium")
             with col[0]:
-                st.image("AmazonLogo2.svg", width=90)
+                st.image("static/AmazonLogo2.svg", width=90)
             with col[1]:
                 if st.button('logout',key="logout-original"):
                     st.session_state['authentication_status'] = False

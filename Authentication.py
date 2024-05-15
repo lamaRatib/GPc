@@ -1,7 +1,7 @@
 import streamlit as st 
 import time
 import threading
-from front import uif
+from ui.front import uif
 import session5 
 from ui import login
 

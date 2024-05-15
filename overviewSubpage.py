@@ -1,10 +1,10 @@
 import streamlit as st
-import db 
+import database.db as db 
 import plotly.express as px
 
 
 def overview(filter): 
-    col1, col2, col3, col4 = st.columns(4)
+    col1, col2, col3, col4 = st.columns([2.8,3.1,2.6,2.1])
 
     # Filter Condition preparation:
     selected_start_date =filter.get('selected_start_date')
@@ -26,7 +26,6 @@ def overview(filter):
 
         date=True
         
-
     # Check selected_category filter
     if filter.get('selected_category') != 'All':
         if date  or subcategory or productid or city or review: 
@@ -63,7 +62,6 @@ def overview(filter):
         
         city=True
 
-
     # Check selected_min_rating and selected_max_rating filters
     if filter.get('selected_min_rating') != 5.0:
         if filter.get('selected_min_rating') == 0.0 and filter.get('selected_max_rating') == 5.0:
@@ -75,7 +73,6 @@ def overview(filter):
                 filtered_table=db.full_merged_data[(db.full_merged_data['rating'] >= filter.get('selected_min_rating')) & (db.full_merged_data['rating'] <= filter.get('selected_max_rating'))]
             
             review=True
-
     
     # Card1: Total Sales
     if date or category or subcategory or productid or city or review:

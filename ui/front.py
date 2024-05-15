@@ -1,6 +1,6 @@
 import streamlit as st 
 from streamlit_option_menu import option_menu
-import dashboard, sentiment, session5 
+import ui.dashboard as dashboard, ui.sentiment as sentiment, session5 
 
 
 def uif():
@@ -11,27 +11,14 @@ def uif():
     # Appling CSS styling on streamlit page
     st.markdown("""
         <style>
-            .block-container {
-                padding-top: 1rem;
-                padding-bottom: 0rem;
-                padding-left: 5rem;
-                padding-right: 5rem;
-            }
-            .sidebar .sidebar-content {
-                padding-top: 0px !important;
-                padding-bottom: 0px !important;
-            }
-            .sidebar .stImage {
-                margin-top: -10px !important;
-                margin-bottom: -10px !important;
-            }
-            section[data-testid="stSidebar"] {
-                width: 300px !important; 
-            }
-            section.main > div {max-width:70rem}
-                
-            button[title="View fullscreen"]{visibility: hidden;}
-
+            .block-container { padding-top: 1rem; padding-bottom: 0rem; padding-left: 5rem; padding-right: 5rem; }
+            .sidebar .sidebar-content { padding-top: 0px !important; padding-bottom: 0px !important; }
+            .sidebar .stImage { margin-top: -10px !important; margin-bottom: -10px !important; }
+            section[data-testid="stSidebar"] { width: 300px !important; }
+            section.main > div { max-width:70rem }
+            button[title="View fullscreen"] { visibility: hidden; }
+            #MainMenu { visibility: hidden; } 
+            .stDeployButton { display:none; } 
         </style>
         """, unsafe_allow_html=True)
     

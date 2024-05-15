@@ -47,8 +47,20 @@ class DB:
     
   def cleaning(self,df):
     # Cleaning the resulting of query func
+    
+    # Duplicates handeling
     df.drop_duplicates(inplace=True)
-    df.dropna(inplace=True)
+
+    # Null handeling
+    for column in df.columns:
+            if column == 'review_content':
+                continue
+            if df[column].dtype in ['int64', 'float64']:
+                mean_value = df[column].mean()
+                df[column].fillna(mean_value, inplace=True)
+            elif df[column].dtype == 'object':
+                df[column].fillna(method='ffill', inplace=True)
+    
     return df
 
 datab=DB()
@@ -61,5 +73,3 @@ review=datab.get_review()
 merged_data = pd.merge(sales, products, on='product_id', how='outer')
 merged_data = pd.merge(merged_data, customer, on='customer_id', how='outer')
 full_merged_data = pd.merge(merged_data, review, on=['product_id', 'customer_id'], how='outer')
-
-
