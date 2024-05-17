@@ -47,7 +47,7 @@ class DB:
     
   def cleaning(self,df):
     # Cleaning the resulting of query func
-    
+
     # Duplicates handeling
     df.drop_duplicates(inplace=True)
 
@@ -57,9 +57,9 @@ class DB:
                 continue
             if df[column].dtype in ['int64', 'float64']:
                 mean_value = df[column].mean()
-                df[column].fillna(mean_value, inplace=True)
+                df[column] = df[column].fillna(mean_value)
             elif df[column].dtype == 'object':
-                df[column].fillna(method='ffill', inplace=True)
+                df[column] = df[column].bfill()
     
     return df
 

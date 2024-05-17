@@ -8,6 +8,13 @@ from ui import login
 # The first page that will be run by streamlit 
 
 st.set_page_config(page_title="Amazon Sales Dashboard", page_icon=":bar_chart:",layout='wide')
+st.markdown("""
+        <style>
+            #MainMenu { visibility: hidden; } 
+            .stDeployButton { display:none; } 
+        </style>
+        """, unsafe_allow_html=True)
+
 
 # Intitialize the st.session_state:
 if 'authentication_status' not in st.session_state:

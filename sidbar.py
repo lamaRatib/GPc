@@ -68,7 +68,9 @@ class visuals:
         
         return selected
 
+
     def sidebar_top(self):
+        # The top sidebar code
         container3 = st.container(border=True,height=70)
         with container3:
             col = st.columns([3.2, 3], gap="medium")
@@ -82,6 +84,36 @@ class visuals:
                     st.rerun()
         st.markdown('<hr style="margin-top: 0px; margin-bottom: 7px">', unsafe_allow_html=True)
         st.subheader(':level_slider: Filters:')
+
+    
+    def toastNotificate(self,par,filter):
+        # Update user the filter condition whenever user made a filter
+        st.markdown(
+        """ <style>
+            div[data-testid=stToast] { background-color: #2C2C2C; width: 25%; }
+            [data-testid=toastContainer] [data-testid=stMarkdownContainer] > p { font-size: 15px; font-style: normal; font-weight: 450; foreground-color: #565654; }
+        </style> """, unsafe_allow_html=True )
+
+        if par['category']:
+            st.toast(':level_slider: The displayed data is filtered by category: ' + filter.get('selected_category')) 
+
+        if par['subcategory']:
+            st.toast(':level_slider: The displayed data is filtered by sub-category: ' + filter.get('selected_subcategory')) 
+        
+        if par['productid']:
+            st.toast(':level_slider: The displayed data is filtered by product id: ' + filter.get('selected_product')) 
+
+        if par['city']:
+            st.toast(':level_slider: The displayed data is filtered by city: ' + filter.get('selected_city')) 
+
+        if par['date']:
+            st.toast(':level_slider: The displayed data is filtered by date: from ' + str(filter.get('selected_start_date')) + ' to ' + str(filter.get('selected_end_date'))) 
+
+        if par['rating']:
+            st.toast(':level_slider: The displayed data is filtered by rating: from ' + str(filter.get('selected_min_rating')) + ' to ' + str(filter.get('selected_max_rating'))) 
+
+
+        
     
 
 
