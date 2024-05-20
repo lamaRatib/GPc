@@ -1,5 +1,5 @@
 import streamlit as st
-import database.db as db 
+import db 
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures

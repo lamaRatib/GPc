@@ -1,5 +1,4 @@
-import database.db as db 
-
+import db 
 
 def performance(filter): 
 

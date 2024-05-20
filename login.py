@@ -1,5 +1,5 @@
 import streamlit as st 
-import database.db as db
+import db 
 
 def login():
     sql = "SELECT email,password,user_name FROM user"

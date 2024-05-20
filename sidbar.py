@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import database.db as db
+import db 
 
 class visuals:
 

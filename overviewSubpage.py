@@ -1,4 +1,4 @@
-import database.db as db 
+import db 
 
 
 def overview(filter): 

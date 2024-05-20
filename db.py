@@ -70,6 +70,6 @@ customer=datab.get_customer()
 review=datab.get_review()
 
 # Full Joins:
-merged_data = pd.merge(sales, products, on='product_id', how='outer')
-merged_data = pd.merge(merged_data, customer, on='customer_id', how='outer')
-full_merged_data = pd.merge(merged_data, review, on=['product_id', 'customer_id'], how='outer')
+merged_data1 = pd.merge(sales, products, on='product_id', how='outer')
+merged_data2 = pd.merge(merged_data1, customer, on='customer_id', how='outer')
+full_merged_data = pd.merge(merged_data2, review, on=['product_id', 'customer_id'], how='outer')

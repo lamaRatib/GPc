@@ -1,9 +1,8 @@
 import streamlit as st 
 import time
 import threading
-from ui.front import uif
-import session5 
-from ui import login
+from front import uif
+import session5, login
 
 # The first page that will be run by streamlit 
 
