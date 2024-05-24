@@ -4,7 +4,6 @@ from unittest.mock import patch
 import time
 
 
-
 def mock_updateORend(key1, key2):
     """
         This mock function simulates the logic within updateORend for testing purposes.
@@ -50,9 +49,13 @@ def test_session_timeout():
 def test_session_not_timed_out():
     setUp()
     st.session_state['last_activity_time'] = time.time() - 60 
+
     with patch('session5.check_activity', mock_check_activity()):
         mock_updateORend("test_key1", "test_key2")
 
     assert st.session_state['session_ends'] == False, "Session should not be timed out with recent activity"
     assert st.session_state['authentication_status'] == True, "User should be logged in"
 
+
+if __name__ == '__main__':
+    pytest.main()
