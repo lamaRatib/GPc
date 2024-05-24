@@ -5,14 +5,22 @@ def test_login():
     
     assert not at.exception
 
+
 def test_front():
     at = AppTest.from_file("front.py").run()
     assert not at.exception
+
 
 def test_dashboard():
     at = AppTest.from_file("dashboard.py").run()
     assert not at.exception
 
+
 def test_sentiment():
     at = AppTest.from_file("sentiment.py").run()
+    assert not at.exception
+
+
+def test_sidbar():
+    at = AppTest.from_file("sidbar.py").run()
     assert not at.exception
