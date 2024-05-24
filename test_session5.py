@@ -1,5 +1,5 @@
 import streamlit as st
-from unittest import TestCase
+import pytest
 from unittest.mock import patch  
 import time
 
@@ -28,21 +28,31 @@ def mock_check_activity():
     return
 
 
-class TestSessionTimeout(TestCase):
 
-    def setUp(self):
-        # Reset session state before each test
-        st.session_state = {}
-        st.session_state['authentication_status']=True
-        st.session_state['session_ends'] = False
+def setUp():
+    # Reset session state before test
+    st.session_state = {}
+    st.session_state['authentication_status']=True
+    st.session_state['session_ends'] = False
 
 
-    def test_session_timeout(self):
-        self.setUp()
-        st.session_state['last_activity_time'] = time.time()-309
+def test_session_timeout():
+    setUp()
+    st.session_state['last_activity_time'] = time.time() - 309 
 
-        with patch('session5.check_activity', mock_check_activity()):
-            mock_updateORend("test_key1", "test_key2")
+    with patch('session5.check_activity', mock_check_activity()):
+        mock_updateORend("test_key1", "test_key2")
 
-        self.assertTrue(st.session_state['session_ends'], "Session should be marked as ended after inactivity")
-        self.assertFalse(st.session_state['authentication_status'], "should be logged out")
+    assert st.session_state['session_ends'] == True, "Session should be marked as ended after inactivity"
+    assert st.session_state['authentication_status'] == False, "User should be logged out"
+
+
+def test_session_not_timed_out():
+    setUp()
+    st.session_state['last_activity_time'] = time.time() - 60 
+    with patch('session5.check_activity', mock_check_activity()):
+        mock_updateORend("test_key1", "test_key2")
+
+    assert st.session_state['session_ends'] == False, "Session should not be timed out with recent activity"
+    assert st.session_state['authentication_status'] == True, "User should be logged in"
+
