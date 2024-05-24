@@ -17,7 +17,7 @@ def mock_updateORend(key1, key2):
         st.session_state['last_activity_time'] = time.time()
 
 
-def mock_check_activity(self):
+def mock_check_activity():
     """
         This mock function simulates the behavior of check_activity for testing purposes.
     """
@@ -41,7 +41,7 @@ class TestSessionTimeout(TestCase):
         self.setUp()
         st.session_state['last_activity_time'] = time.time()-309
 
-        with patch('session5.check_activity', mock_check_activity(self)):
+        with patch('session5.check_activity', mock_check_activity()):
             mock_updateORend("test_key1", "test_key2")
 
         self.assertTrue(st.session_state['session_ends'], "Session should be marked as ended after inactivity")
