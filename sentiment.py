@@ -12,7 +12,7 @@ def app():
     # Sentiment Analysis code:
     with col[0]:
         with st.container(border=True, height=120):
-            option1_selected = st.radio("Choose an option:", ["Stored Customer Reviews","Input a Review"], index=0)
+            option1_selected = st.radio("Choose an option:", ["Stored Customer Reviews","Personalized Review"], index=0)
         
         if option1_selected == "Stored Customer Reviews":
 
@@ -31,7 +31,7 @@ def app():
 
             visuals().toastNotificate(par,filter)
          
-        elif option1_selected == "Input a Review":
+        elif option1_selected == "Personalized Review":
             session5.updateORend("modal5","logout5")
             st.markdown("""
             <style>

@@ -24,3 +24,7 @@ def test_sentiment():
 def test_sidbar():
     at = AppTest.from_file("sidbar.py").run()
     assert not at.exception
+
+def test_prediction():
+    at = AppTest.from_file("predictionSubpage.py").run()
+    assert not at.exception

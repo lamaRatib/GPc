@@ -1,6 +1,3 @@
-# test_db.py
-
-import pytest
 import db
 
 
@@ -53,6 +50,3 @@ def test_full_join():
     expected_columns = list(sales.columns) + list(products.columns) + list(customers.columns) + list(reviews.columns)
     assert set(full_merged_data.columns) == set(expected_columns)
 
-
-if __name__ == '__main__':
-    pytest.main()

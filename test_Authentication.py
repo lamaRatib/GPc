@@ -1,4 +1,3 @@
-import pytest
 import streamlit as st
 from unittest.mock import patch  
 import time
@@ -85,6 +84,3 @@ def test_no_input_login():
     assert st.session_state["authentication_status"] is False
     assert st.session_state["logged_out"] is True
 
-
-if __name__ == '__main__':
-    pytest.main()

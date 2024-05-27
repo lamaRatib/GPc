@@ -1,5 +1,4 @@
 import streamlit as st
-import pytest
 from unittest.mock import patch  
 import time
 
@@ -56,6 +55,3 @@ def test_session_not_timed_out():
     assert st.session_state['session_ends'] == False, "Session should not be timed out with recent activity"
     assert st.session_state['authentication_status'] == True, "User should be logged in"
 
-
-if __name__ == '__main__':
-    pytest.main()
